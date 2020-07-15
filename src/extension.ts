@@ -13,6 +13,8 @@ interface SourceKitConfig {
   commandPath: string
   iOSsdkPath: string
   targetArch: string
+  indexPathDB: string
+  indexStorePath: string
 }
 
 export async function activate(context: ExtensionContext): Promise<void> {
@@ -47,6 +49,16 @@ export async function activate(context: ExtensionContext): Promise<void> {
   let targetArch = config.targetArch
   if (targetArch) {
       args = args.concat(['-Xswiftc', '-target', '-Xswiftc', targetArch])
+  }
+
+  let indexPathDB = config.indexPathDB
+  if (indexPathDB) {
+      args = args.concat(['-index-db-path',indexPathDB])
+  }
+
+  let indexStorePath= config.indexStorePath
+  if (indexStorePath) {
+      args = args.concat(['-index-store-path',indexStorePath])
   }
 
   const serverOptions: ServerOptions = {
